@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>AI Dosage Analyzer</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="app.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <style>
+            .left {
+                background-color: White;
+                float: left;
+                width: 8%;
+                margin-left:2%;
+            }
+            .right {
+                background-color: White;
+                margin-left: 2%;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="app" ng-controller="notesController" style='margin:20px;'>
+
+            <h1>AI Dosage Analyzer Demo</h1>
+            <div>
+                ...
+
+                <br>
+                <br>
+...
+            </div><br>
+            <button class="btn btn-default" type="button" ng-click="show_arch()">
+              <span class="glyphicon glyphicon-question-sign" aria-hidden="true"> Information</span>
+            </button>
+            <div class="funky-show-hide" ng-show="show_arch_diagram">
+                Extra Information...
+            </div>
+
+            <h3>Predictions</h3>
+            <button class="btn btn-default" type="button" ng-click="clear_predictions()">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+            <div ng-bind-html="predictions"></div>
+
+            <h3>Notes to Process</h3>
+            <div>This is the list of notes to process. To add notes to the list, fill out details below and click insert, or include from pre-defined list at the bottom.</div>
+
+            <br>
+            <button class="btn btn-default" type="button" ng-click="submit()">
+                <span class="glyphicon glyphicon-play" aria-hidden="true"> Predict</span>
+            </button>
+            {{num_notes_to_process}} notes selected for processing.
+            <br>
+
+            <div class="panel panel-success" ng-repeat="note in notes_to_process">
+                <div class="panel-heading">
+                    <button class="btn btn-default" type="button" ng-click="select_to_remove($index)">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="panel-body">
+                {{note.note}}</div>
+            </div>
+
+            <br>
+            <button class="btn btn-default" type="button" ng-click="start_create_note()">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> Create</span>
+            </button>
+            <br>
+            <br>
+            <button class="btn btn-default" type="button" ng-click="json()">
+                <span class="glyphicon glyphicon-play" aria-hidden="true"> JSON</span>
+            </button>
+            <br>
+            {{json_data}} 
+            <br>
+            <div class="panel panel-primary" ng-show="enter_note_active">
+                <div class="panel-heading">
+                    <button class="btn btn-default" type="button" ng-click="cancel_create_note()">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-default" type="button" ng-click="accept_create_note()">
+                      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                    <b>Enter note details:</b>
+                </div>
+                <div>
+                    <span style="color:red" ng-show="show_entry_error">Please enter values for all fields!</span>
+                    <!--<div class="left">-->
+                        <!--<br>-->
+                        <!--<b>Gender:</b><br>-->
+                        <!--<input type="radio" ng-model="entry.gender" value="Female">Female<br>-->
+                        <!--<input type="radio" ng-model="entry.gender" value="Male">Male<br>-->
+                        <!--<b>Age:</b><br>-->
+                        <!--<input type="radio" ng-model="entry.age" value=">=65">65 years or older<br>-->
+                        <!--<input type="radio" ng-model="entry.age" value="<65">Less than 65 years<br>-->
+                        <!--<b>Physician Order:</b><br>-->
+                        <!--<input type="radio" ng-model="entry.PO" value="Inpatient">Inpatient<br>-->
+                        <!--<input type="radio" ng-model="entry.PO" value="Observation">Observation-->
+                    <!--</div>-->
+                    <div class="right">
+                        <b>Note:</b><br>
+                        <textarea ng-model="entry.note" name="notes" style='width:99%' rows="1"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+
+            <h3>Available Notes</h3>
+            <div>Select notes from this list to add to the list of notes to process.</div>
+            <div class="panel panel-info" ng-repeat="note in notes_not_to_process">
+                <div class="panel-heading">
+                    <button class="btn btn-default" type="button" ng-click="select_to_add($index)">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="panel-body">
+                {{note.note}}</div>
+            </div>
+            Using model version xx.xx from DATE.
+        </div>
+    </body>
+</html>
