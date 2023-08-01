@@ -15,7 +15,7 @@ From the root directory, run the following commands in your terminal:
 * Now go to your browser and visit http://localhost:8085
 
 ## Example API request
-If the application is running at http://apsrd8505.uhc.com:8085/, then the request url will look like this sample:
+If the application is running, then the request url will look like this sample:
 
 <img src="screenshots/example_api_request.png" width="560">
 
